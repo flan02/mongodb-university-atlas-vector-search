@@ -20,7 +20,9 @@ def query_data(query):
     retriever = vectorStore.as_retriever(
         search_type="similarity",
         search_kwargs={
-            "k": 3
+            "k": 3,
+            # "pre_filter": { "hasCode": { "$eq": False } },
+            # "score_threshold": 0.01
         },
     )
 
