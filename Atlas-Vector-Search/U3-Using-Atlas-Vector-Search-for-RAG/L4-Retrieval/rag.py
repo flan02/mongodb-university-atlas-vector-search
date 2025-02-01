@@ -10,14 +10,16 @@ vectorStore = MongoDBAtlasVectorSearch.from_connection_string(
     key_param.MONGODB_URI,
     dbName + "." + collectionName,
     OpenAIEmbeddings(disallowed_special=(), openai_api_key=key_param.LLM_API_KEY),
-    index_name=index,
+    index_name=index
 )
 
 def query_data(query):
     retriever = vectorStore.as_retriever(
         search_type="similarity",
         search_kwargs={
-            "k": 3
+            "k": 3,
+            # "pre_filter": { "hasCode": { "$eq": False } },
+            # "score_threshold": 0.01
         },
     )
 
